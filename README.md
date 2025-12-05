@@ -1,1 +1,6 @@
-# RoboArmGS
+# RoboArmGS: High-Quality Robotic Arm Splatting via Bézier Curve Refinement
+
+## Overview
+![overview](./assets/teaser.png)
+
+Building high-quality digital assets of robotic arms is crucial yet challenging for the Real2Sim2Real pipeline. Current approaches naively bind static 3D Gaussians according to URDF links, forcing them to follow an URDF-rigged motion passively. However, real-world arm motion is noisy, and the idealized URDF-rigged motion cannot accurately model it, leading to severe rendering artifacts in 3D Gaussians. To address these challenges, we propose RoboArmGS, a novel hybrid representation that refines the URDF-rigged motion with learnable Bézier curves, enabling more accurate real-world motion modeling. To be more specific, we present a learnable Bézier Curve motion refiner that corrects per-joint residuals to address mismatches between real-world motion and URDF-rigged motion. RoboArmGS enables the learning of more accurate real-world motion while achieving a coherent binding of 3D Gaussians across arm parts. To support future research, we contribute a carefully collected dataset named RoboArm4D, which comprises several widely used robotic arms for evaluating the quality of building high-quality digital assets. We evaluate our approach on RoboArm4D, and RoboArmGS achieves state-of-the-art performance in real-world motion modeling and rendering quality. 

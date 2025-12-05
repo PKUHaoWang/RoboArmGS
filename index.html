@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <br>
+    <!-- <div class="logo" style="text-align: center;">
+        <a href="index.html">
+          <img src="./assets/images/logo.png">
+        </a>
+    </div> -->
+    <title>RoboArmGS: High-Quality Robotic Arm Splatting via Bézier Curve Refinement
+    </title>
+
+    <!-- <script>
+        var task_map = {
+            "simple-object-manipulation": "simple_object_manipulation",
+            "visual-goal-reaching": "visual_goal_reaching",
+            "novel-concept-grounding": "novel_concept_grounding",
+            "one-shot-video-imitation": "one_shot_video_imitation",
+            "visual-constraint-satisfaction": "visual_constraint_satisfaction",
+            "visual-reasoning": "visual_reasoning"
+        };
+
+        function updateDemoVideo(category) {
+            // var demo = document.getElementById("single-menu-demos").value;
+            var task = document.getElementById(category + "-menu-tasks").value;
+            var inst = document.getElementById(category + "-menu-instances").value;
+
+            console.log(task_map[category], task, inst)
+
+            var video = document.getElementById(category + "-single-task-video");
+            video.src = "assets/videos/demos/" +
+                task_map[category] +
+                "/" +
+                task +
+                "/" +
+                inst +
+                ".mp4";
+            video.playbackRate = 2.0;
+            video.play();
+        }
+    </script> -->
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+</head>
+
+
+
+
+<body>
+    <!-- Title and Author -->
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title">RoboArmGS: High-Quality Robotic Arm Splatting via Bézier Curve Refinement</h1>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a target="_blank" href="https://pkuhaowang.github.io/">Hao&#160;Wang</a><sup>1*</sup>,
+                                <a target="_blank" href="https://ucwxb.github.io/">Xiaobao&#160;Wei</a><sup>1*</sup>,
+                                <a target="_blank" href="https://github.com/myendless1">Ying&#160;Li</a><sup>1</sup>,
+                                <a target="_blank" href="https://github.com/qingpowuwu">Qingpo&#160;Wuwu</a><sup>1</sup>,
+                                <a target="_blank" href="https://scholar.google.com/citations?user=QRoBV_UAAAAJ&hl=en">Dongli&#160;Wu</a><sup>1</sup>,
+                                <a target="_blank" href="https://github.com/hey-cjj/">Jiajun&#160;Cao</a><sup>1</sup>,
+                                <br>
+                                <a target="_blank"
+                                    href="https://lu-m13.github.io/">Ming&#160;Lu</a><sup>1</sup>,
+                                <a target="_blank"
+                                    href="https://wzzheng.net/">Wenzhao&#160;Zheng</a><sup>2</sup>,
+                                <a target="_blank"
+                                    href="https://www.shanghangzhang.com/">Shanghang&#160;Zhang</a><sup>1&#9993;</sup>
+                            </span>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>State Key Laboratory of Multimedia Information Processing, School of Computer Science, Peking University; </span>
+                            <span class="author-block"><sup>2</sup>Department of Electrical Engineering and Computer Sciences, University of California, Berkeley; </span>
+                        </div>
+
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>*&#160;</sup>Equal Contribution&#160;&#160;</span>
+                            <span class="author-block"><sup>&#9993;&#160;</sup>Corresponding Author&#160;&#160;</span>
+                            <!-- <span class="author-block"><sup>&dagger;&#160;</sup>Project Leader&#160;&#160;</span> -->
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <!-- TODO PDF Link. -->
+                                <span class="link-block">
+                                    <a target="_blank" href="https://arxiv.org/abs/2511.17961"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv</span>
+                                    </a>
+                                </span>
+
+                                <span class="link-block">
+                                    <a target="_blank" href="https://arxiv.org/pdf/2511.17961"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </span>
+                                        <span>PDF</span>
+                                    </a>
+                                </span>
+                                
+
+                                <!-- Code Link. -->
+                                <span class="link-block">
+                                    <a href="https://github.com/PKUHaoWang/RoboArmGS"
+                                    class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code(Coming Soon)</span>
+                                    </a>
+                                </span>
+
+                                <!-- <span class="link-block">
+                                    <a href="https://www.youtube.com/watch?v=uiXKfOrfGrQ" target="_blank"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-file-video"></i>
+                                        </span>
+                                        <span>Video</span>
+                                    </a>
+                                </span>
+
+                                <span class="link-block">
+                                    <a href="https://www.bilibili.com/video/BV1YXQRY2EHk" target="_blank"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-film"></i>
+                                        </span>
+                                        <span>BiilBili</span>
+                                    </a>
+                                </span> -->
+
+
+                                <!-- Code Link. -->
+                                <!-- <span class="link-block">
+                                    <a target="_blank" href=""
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                    <a target="_blank" href=""
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-database"></i>
+                                        </span>
+                                        <span>Dataset</span>
+                                    </a>
+                                </span> -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- YouTube Video -->
+     <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                    <div class="column is-four-fifths">
+                        <div class="content">
+                            <h2>
+                                <!-- <h2 class=""> <img src="static/images/highlight_logo.png" width="50"> Highlights</h2> -->
+                                <div class="text-image-container title is-3">
+                                    <div>
+                                        <img src="assets/images/video_logo.png" alt="highlight" width="40">
+                                    </div>
+                                    <div class="text">
+                                        <p>Summary Video</p>
+                                    </div>
+                                </div>
+                            </h2>
+                            <div class="publication-video">
+                                <!---TODO Dhruv: put video link here-->
+                                <iframe src="https://www.youtube.com/embed/tfhQizEqw2E?si=coKgSP7w1lhNkuHV"
+                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+
+        <div class="hero-body">
+            <div class="container is-max-desktop has-text-centered">
+
+                <h2>
+                    <!-- <h2 class=""> <img src="static/images/highlight_logo.png" width="50"> Highlights</h2> -->
+                    <div class="text-image-container title is-3">
+                        <div>
+                            <img src="assets/images/highlight_logo.png" alt="highlight" width="50">
+                        </div>
+                        <div class="text">
+                            <p>Highlights</p>
+                        </div>
+                    </div>
+                </h2>
+            
+                <img src="assets/images/teaser.png" class="interpolation-image" alt=""
+                        style="display: block; margin-left: auto; margin-right: auto" />
+
+                <div class="content has-text-justified">
+                    <p>
+                        <ul>
+                            <li><b>
+                                    We propose <span style="color: #E4A902;">RoboArmGS</span>, a novel hybrid representation that uniquely combines Structured Gaussian Binding (SGB) for geometric consistency with a Bézier-based Motion Refiner (BMR) to accurately model real-world motions and mitigate rendering artifacts.
+                                </b></li>
+                            <br>
+                            <li><b>
+                                    We introduce <span style="color: #E4A902;">RoboArm4D</span>, a new public benchmark dataset specifically designed for the task of creating high-fidelity digital assets of robotic arms from video.
+                                </b></li>
+                            <br>
+                            <li><b>
+                                    We conduct extensive experiments demonstrating that <span style="color: #E4A902;"></span>RoboArmGS</span> achieves state-of-the-art performance on the RoboArm4D benchmark in both rendering quality and motion accuracy.
+                                </b></li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Motivation -->
+    <!-- <section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="is-centered has-text-centered">
+                <div class="is-four-fifths">
+                    <h2 class="title is-3">Motivation</h2>
+                    <img src="assets/images/motivation.png" class="interpolation-image" alt=""
+                        style="display: block; margin-left: auto; margin-right: auto" />
+                    <div class="content has-text-justified">
+                        <p>
+                            Illustration of different Gaussian updates. 
+                            Left: Previous approach with random position updates <b><span style="color: #209CEF;">lacking geometric constraints</span></b>. 
+                            Right: Our approach with surface normal-guided updates that <b><span style="color: #209CEF;">leverage planar priors</span></b> for more accurate indoor scene representation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Paper abstract -->
+    <section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Building high-quality digital assets of robotic arms is crucial yet challenging for the Real2Sim2Real pipeline. 
+                            Current approaches naively bind static 3D Gaussians according to URDF links, forcing them to follow an URDF-rigged motion passively. 
+                            However, real-world arm motion is noisy, and the idealized URDF-rigged motion cannot accurately model it, leading to severe rendering artifacts in 3D Gaussians.  
+                            To address these challenges, we propose RoboArmGS, a novel hybrid representation that refines the URDF-rigged motion with learnable Bézier curves, enabling more accurate real-world motion modeling.
+                            To be more specific, we present a learnable Bézier Curve motion refiner that corrects per-joint residuals to address mismatches between real-world motion and URDF-rigged motion.
+                            RoboArmGS enables the learning of more accurate real-world motion while achieving a coherent binding of 3D Gaussians across arm parts.
+                            To support future research, we contribute a carefully collected dataset named RoboArm4D, which comprises several widely used robotic arms for evaluating the quality of building high-quality digital assets.
+                            We evaluate our approach on RoboArm4D, and RoboArmGS achieves state-of-the-art performance in real-world motion modeling and rendering quality.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End paper abstract -->
+
+
+
+    <!-- overview -->
+    <section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="is-centered has-text-centered">
+                <div class="is-four-fifths">
+                    <h2 class="title is-3">Method Overview</h2>
+                    <img src="assets/images/method.png" class="interpolation-image" alt=""
+                        style="display: block; margin-left: auto; margin-right: auto" />
+                    <div class="content has-text-justified">
+                        <p>
+                            <b>Overview of RoboArmGS.</b> Our method consists of two key modules: 
+                            (a) Structured Gaussian Binding (SGB) binds 3D Gaussians according to the URDF links with adaptive densification; 
+                            (b) Bézier-based Motion Refinement (BMR) corrects URDF-rigged motion and real-world motion discrepancies through learnable Bézier curves, enabling accurate novel-pose synthesis. 
+                            The framework processes multi-view RGB images with known camera poses and robot joint angles, optimizing both modules jointly to achieve photorealistic rendering from novel viewpoints and robot motions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- element -->
+    <!-- <section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="is-centered has-text-centered">
+                <div class="is-four-fifths">
+                    <h2 class="title is-3">Geometry-guided Refinement Module</h2>
+                    <img src="assets/images/refine_layer.png" class="interpolation-image" alt=""
+                        style="display: block; margin-left: auto; margin-right: auto" />
+                    <div class="content has-text-justified">
+                        <p>
+                            <b>Geometry-guided Refinement Module.</b> Given a constraint, our model ConSeg generates
+                            instance-level and part-level masks across multiple views, which are projected into 3D
+                            space. Through a series of heuristics, the desired elements are produced. Once all elements
+                            are obtained, they are annotated onto the original multi-view images.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!--  Visual  -->
+<section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="is-centered has-text-centered">
+                <div class="is-four-fifths" style="margin: 0 auto;">
+                    <h2 class="title is-3">Main Results</h2>
+                    <img src="assets/images/main_results.png" class="interpolation-image" alt="Quantitative Results"
+                        style="display: block; margin-left: auto; margin-right: auto; width: 100%;" />
+                    
+                    <div class="content has-text-justified">
+                        <p>
+                            <b>RoboArmGS achieves superior performance in both novel-view and novel-pose synthesis tasks, significantly outperforming existing baselines. In static reconstruction, the SGB module effectively utilizes the robot's kinematic mesh as a geometric prior to ensure high-fidelity and structurally coherent 3D representations. Furthermore, for dynamic modeling, the method overcomes the limitations of generic deformation models and FK-based approaches by employing a Bézier-based Motion Refiner, which ensures kinematic accuracy and rendering sharpness across arbitrary joint configurations, validating the system as a controllable and precise digital twin asset.</b>
+                        </p>
+                    </div>
+
+                    <!-- 分割线或间距 (可选) -->
+                    <br/>
+
+                    <h3 class="title is-4">Qualitative Comparisons</h3>
+                    
+                    <img src="assets/images/nps_vis.png" class="interpolation-image" alt="Qualitative Visualization"
+                        style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 10px; margin-bottom: 10px;" />
+                    
+                    <div class="content has-text-justified">
+                        <p>
+                            <b>
+                                RoboArmGS achieves photorealistic rendering with precise geometric alignment. Baselines fail in different ways: 4DGS and Deformable 3DGS produce blurred, distorted results lacking kinematic control; 3DGS+FK, despite correct Gaussian positioning, generates severe artifacts from inaccurate motion. Our BMR module successfully addresses both motion accuracy and rendering coherence.}
+                            </b>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section hero">
+        <div class="container is-max-desktop">
+            <div class="is-centered has-text-centered">
+                <div class="is-four-fifths">
+                    <h2 class="title is-3">Ablation Study</h2>
+                    <img src="assets/images/ablation.png" class="interpolation-image" alt=""
+                        style="display: block; margin-left: auto; margin-right: auto" />
+                    <div class="content has-text-justified">
+                        <p> <b>Comprehensive ablation studies validate the indispensability of each core component within RoboArmGS. The SGB module is proven crucial for maintaining high-fidelity static reconstruction, while the BMR module is essential for bridging kinematic modeling gaps in novel-pose synthesis, particularly in high-motion areas like the gripper where it significantly eliminates artifacts. Furthermore, the analysis confirms that both the global Learnable Bézier Correction and local Per-Joint Static Offset are complementary, empirically establishing that the full integration of SGB and BMR is necessary for the system's performance. </b></p>
+                    </div>
+
+                    <!-- 分割线或间距 (可选) -->
+                    <br/>
+
+                    <h3 class="title is-4">Ablation Visualization</h3>
+
+                    <img src="assets/images/nps_vis.png" class="interpolation-image" alt="Qualitative Visualization"
+                        style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 10px; margin-bottom: 10px;" />
+                    
+                    <div class="content has-text-justified">
+                        <p>
+                            <b>
+                                Green box: base region with minimal motion shows similar results for both variants. Red box: gripper region with significant motion reveals rendering artifacts when BMR is removed, demonstrating its importance for high-mobility components.
+                            </b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Video  -->
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3 has-text-centered">Digital Assets Visualization</h2>
+                <p>
+                    <b>
+                        The interactive pipeline demonstrates that our digital asset seamlessly integrates user-specified kinematic control with learned Bézier refinement to drive 3D Gaussians, enabling real-time, photorealistic rendering of arbitrary poses.
+                    </b>
+                </p>
+                
+                <img src="assets/images/asset_vis.png" 
+                     alt="Digital Asset Testing Pipeline."
+                     style="display: block; margin-left: auto; margin-right: auto; width: 100%; margin-top: 20px; margin-bottom: 20px;" />
+
+                <!-- Video Container -->
+                <div class="video-row">
+                    <!-- Franka -->
+                    <div class="item">
+                        <h3 class="subtitle is-4 has-text-centered">Target A</h3>
+                        <video poster="" id="video_a" autoplay playsinline controls muted loop>
+                            <source src="assets/videos/Franka.mp4"
+                                type="video/mp4">
+                        </video>
+                        <br>
+                    </div>
+                    <!-- UR5 -->
+                    <div class="item">
+                        <h3 class="subtitle is-4 has-text-centered">Target B</h3>
+                        <video poster="" id="video_b" autoplay playsinline controls muted loop>
+                            <source src="assets/videos/UR5.mp4"
+                                type="video/mp4">
+                        </video>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!--BibTex citation -->
+     <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>@article{wang2025roboarmgs,
+  title={RoboArmGS: High-Quality Robotic Arm Splatting via B$\backslash$'ezier Curve Refinement},
+  author={Wang, Hao and Wei, Xiaobao and Li, Ying and Wuwu, Qingpo and Wu, Dongli and Cao, Jiajun and Lu, Ming and Zheng, Wenzhao and Zhang, Shanghang},
+  journal={arXiv preprint arXiv:2511.17961},
+  year={2025}
+}
+</code></pre>
+        </div>
+    </section>
+    <!--End BibTex citation -->
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+
+                        <p>
+                            This page was built using the <a
+                                href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+                            You are free to borrow the of this website, we just ask that you link back to this page in
+                            the footer.
+                            <br> This website is licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>
